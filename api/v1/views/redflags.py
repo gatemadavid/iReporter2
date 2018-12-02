@@ -30,3 +30,10 @@ class RedFlags(Resource, RedFlagsModel):
 class RedFlag(Resource, SingleFlagModel):
     def __init__(self):
         self.db = SingleFlagModel()
+
+    def get(self, flag_id):
+        resp = self.db.getSingleFlag(flag_id)
+        return make_response(jsonify({
+            "Message": "success",
+            "Red Flags": resp
+        }), 200)
