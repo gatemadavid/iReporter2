@@ -1,0 +1,14 @@
+language: python
+python:
+  - 3.6
+
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls codecov
+
+scripts:
+  - pytest --cov-report term missing --cov=app
+
+after-success:
+  - coveralls
+  - codecov --token=9957e2c1-ad5c-4de0-8d3b-41c52d278562
