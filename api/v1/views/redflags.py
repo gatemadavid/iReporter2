@@ -37,3 +37,9 @@ class RedFlag(Resource, SingleFlagModel):
             "Message": "success",
             "Red Flags": resp
         }), 200)
+
+    def delete(self, flag_id):
+        self.db.deleteFlag(flag_id)
+        return make_response(jsonify({
+            "Message": "Flag Deleted"
+        }), 204)
