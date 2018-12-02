@@ -25,3 +25,8 @@ class RedFlags(Resource, RedFlagsModel):
             "Message": "success",
             "Red Flags": resp
         }), 200)
+
+
+class RedFlag(Resource, SingleFlagModel):
+    def __init__(self):
+        self.db = SingleFlagModel()
