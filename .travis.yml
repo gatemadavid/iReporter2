@@ -8,7 +8,7 @@ install:
 
 script:
   # - pytest --with-coverage
-  py.test --cov=app tests/
+  py.test --with-coverage app/tests
 
 after-success:
   - coveralls
