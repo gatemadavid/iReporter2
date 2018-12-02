@@ -43,3 +43,17 @@ class RedFlag(Resource, SingleFlagModel):
         return make_response(jsonify({
             "Message": "Flag Deleted"
         }), 204)
+
+    def put(self, flag_id):
+        data = request.get_json()
+        title = data['title']
+        description = data['description']
+        location = data['location']
+        incident_type = data['type']
+        resp = self.db.updateFlag(
+            flag_id, title, description, location, incident_type)
+        return make_response(jsonify({
+            "Status": 200,
+            "Message": "Incident updated",
+            "data": resp
+        }), 200)
