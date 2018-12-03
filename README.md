@@ -1,37 +1,45 @@
-[![Build Status](https://travis-ci.com/gatemadavid/iReporter2.svg?branch=ch-test-redflags)](https://travis-ci.com/gatemadavid/iReporter2) [![codecov](https://codecov.io/gh/gatemadavid/iReporter2/branch/develop/graph/badge.svg)](https://codecov.io/gh/gatemadavid/iReporter2) [![Coverage Status](https://coveralls.io/repos/github/gatemadavid/iReporter2/badge.svg?branch=develop)](https://coveralls.io/github/gatemadavid/iReporter2?branch=develop)
+[![Build Status](https://travis-ci.com/gatemadavid/iReporter2.svg?branch=develop)](https://travis-ci.com/gatemadavid/iReporter2) [![codecov](https://codecov.io/gh/gatemadavid/iReporter2/branch/develop/graph/badge.svg)](https://codecov.io/gh/gatemadavid/iReporter2)
 
-#Project: iReporter
-iReporter is a platform that allows the public to speak out against corruption and poor development within the society. In case of corruption, users can create a red flag and include the location and description of the incident so that the relevant agencies can investigate. On the other hand, users can seek government intervention in areas such as poor infrastructure.
+**Project: iReporter**
 
-#Getting Started
+- iReporter is a platform that allows the public to speak out against corruption and poor development within the society. In case of corruption, users can create a red flag and include the location and description of the incident so that the relevant agencies can investigate. On the other hand, users can seek government intervention in areas such as poor infrastructure.
+
+**Getting Started**
 This is a python3 project and users will require an environment that runs python 3 before cloning the repo.
 
-#Prerequisites
-[Python3](https://www.python.org/download/releases/3.0/)
-[Flask](http://flask.pocoo.org/)
-[Flask RESTFul](https://flask-restful.readthedocs.io/en/latest/)
+**Prerequisites**
 
-#Installing
+- [Python3](https://www.python.org/download/releases/3.0/)
+- [Flask](http://flask.pocoo.org/)
+- [Flask RESTFul](https://flask-restful.readthedocs.io/en/latest/)
+
+**Installing**
 Create a python3 virtual environment using:
-virtualenv -p python3 env
 
-#Activate the virtual environment using:
-source env/bin/activate
+- virtualenv -p python3 env
 
-#Clone the Repository
-git clone https://github.com/gatemadavid/iReporter2.git
+**Activate the virtual environment using:**
 
-#Install Dependencies
-pip install -r requirements.txt
+- source env/bin/activate
 
-#Export the environment variable
-export FLASK_APP=run.py
+**Clone the Repository**
 
-#Run Application
-flask run
+- git clone https://github.com/gatemadavid/iReporter2.git
 
-#Test Endpoints
-##Post a red flag
+**Install Dependencies**
+
+- pip install -r requirements.txt
+
+**Export the environment variable**
+
+- export FLASK_APP=run.py
+
+**Run Application**
+
+- flask run
+
+**Test Endpoints**
+**Post a red flag**
 
 - POST /api/vi/redflags
 
@@ -45,22 +53,23 @@ _data should be json formatted_
 
 The id field is added and incremented automattically
 
-##Fetch all Redflags
+**Fetch all Redflags**
 
 - GET /api/v1/redflgas
 
-##Fetch one Redflag
+**Fetch one Redflag**
 
 - GET /api/vi/redflags/<id>
 
-##Delete a Redflag
+**Delete a Redflag**
 
 - DELETE /api/v1/redflags/<id>
 
-##Update Red flag
+**Update Red flag**
 
 - PUT /api/vi/redflgas/<id>
 
-#Alternative API Consumption
+**Alternative API Consumption**
 The application is hosted on heroku and it can be accessed via postman on the following link:
-https://ireporter2-heroku.herokuapp.com/api/v1/redflags
+
+- https://ireporter2-heroku.herokuapp.com/api/v1/redflags
