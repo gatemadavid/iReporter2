@@ -5,7 +5,8 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install coveralls codecov
-
+env:
+  - CODECOV_TOKEN="c81bb5e2-ad59-4b4a-b059-a776bff6394c"
 script:
   - py.test --cov-report term-missing --cov app
 
