@@ -39,7 +39,10 @@ Create a python3 virtual environment using:
 - flask run
 
 **Test Endpoints**
-**Post a red flag**
+
+- Testing the api endpoints should be dome on [Postman](https://www.getpostman.com/)
+
+  **Post a red flag**
 
 - POST /api/vi/redflags
 
