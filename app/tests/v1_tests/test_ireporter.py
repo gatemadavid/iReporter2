@@ -69,7 +69,7 @@ class RedFlagsTestCase(unittest.TestCase):
             self.payload), content_type='application/json')
         self.assertEqual(res.status_code, 201)
         result = self.client().delete("/api/v1/redflags/1")
-        self.assertEqual(result.status_code, 204)
+        self.assertEqual(result.status_code, 200)
 
     # test users
 
