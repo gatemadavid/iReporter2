@@ -52,18 +52,23 @@ The id field is added and incremented automattically
 **Fetch all Redflags**
 
 - GET /api/v1/redflgas
+  ![get all](https://user-images.githubusercontent.com/27230922/49426053-65431500-f7b0-11e8-92c2-1ff211e8fc31.png)
 
 **Fetch one Redflag**
 
 - GET /api/vi/redflags/<id>
+  ![get one](https://user-images.githubusercontent.com/27230922/49426088-83107a00-f7b0-11e8-95f1-63b8384de316.png)
 
 **Delete a Redflag**
 
 - DELETE /api/v1/redflags/<id>
 
+![delete](https://user-images.githubusercontent.com/27230922/49426392-80625480-f7b1-11e8-81a6-a1ede1453818.png)
+
 **Update Red flag**
 
 - PUT /api/vi/redflgas/<id>
+  ![put](https://user-images.githubusercontent.com/27230922/49426254-16e24600-f7b1-11e8-9a02-b209da3ce7ed.png)
 
 **Alternative API Consumption**
 The application is hosted on heroku and it can be accessed via postman on the following link:
