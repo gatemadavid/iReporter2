@@ -45,14 +45,7 @@ Create a python3 virtual environment using:
 **Post a red flag**
 
 - POST /api/vi/redflags
-
-_data should be json formatted_
-{
-"title": title,
-"description": description,
-"location": location,
-"type": incident_type
-}
+  ![post](https://user-images.githubusercontent.com/27230922/49425507-e00b3080-f7ae-11e8-8cb1-be9755b7c143.png)
 
 The id field is added and incremented automattically
 
