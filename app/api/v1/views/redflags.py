@@ -15,8 +15,7 @@ class RedFlags(Resource, RedFlagsModel):
         incident_type = data['type']
         resp = self.db.save(title, description, location, incident_type)
         return make_response(jsonify({
-            "message": "Red Flag Created",
-            "Red Flags": resp
+            "message": "Red Flag Created"
         }), 201)
 
     def get(self):
