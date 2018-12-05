@@ -45,7 +45,7 @@ class RedFlagsTestCase(unittest.TestCase):
             self.user), content_type='application/json')
         self.assertEqual(res.status_code, 201)
         result = self.client().get("/api/v2/users/1")
-        self.assertEqual(result.status_code, 200)
+        self.assertEqual(result.status_code, 201)
 
     def test_delete_user(self):
         res = self.client().post(users_url, data=json.dumps(
@@ -53,6 +53,11 @@ class RedFlagsTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 201)
         result = self.client().delete("/api/v2/users/1")
         self.assertEqual(result.status_code, 200)
+
+    def test_update_user(self):
+        res = self.client().post(users_url, data=json.dumps(
+            self.user), content_type='application/json')
+        self.assertEqual(res.status_code, 201)
 
     # test incidents
 
@@ -72,7 +77,7 @@ class RedFlagsTestCase(unittest.TestCase):
             self.incident), content_type='application/json')
         self.assertEqual(res.status_code, 201)
         result = self.client().get("/api/v2/incidents/1")
-        self.assertEqual(result.status_code, 200)
+        self.assertEqual(result.status_code, 201)
 
     def test_delete_incident(self):
         res = self.client().post(incidents_url, data=json.dumps(
@@ -80,6 +85,11 @@ class RedFlagsTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 201)
         result = self.client().delete("/api/v2/incidents/1")
         self.assertEqual(result.status_code, 200)
+
+    def test_update_incident(self):
+        res = self.client().post(incidents_url, data=json.dumps(
+            self.incident), content_type='application/json')
+        self.assertEqual(res.status_code, 201)
 
     def tearDown(self):
         destroy_tables()
