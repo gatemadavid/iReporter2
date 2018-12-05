@@ -46,14 +46,16 @@ Create a python3 virtual environment using:
 
 - POST /api/vi/redflags
   _Expected Data format:_
-  ````{
+
+  ```{
   "title":"Bad Road",
   "description": "Potholes on the road",
   "location":"Ronald Ngars Street",
   "type":"Intervention"
   }```
   ![post](https://user-images.githubusercontent.com/27230922/49425507-e00b3080-f7ae-11e8-8cb1-be9755b7c143.png)
-  ````
+
+  
 
 The id field is added and incremented automattically
 
