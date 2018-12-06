@@ -1,4 +1,5 @@
 import psycopg2
+import psycopg2.extras
 
 
 url = "dbname='ireporter' host='localhost' port='5432' user='david' password='davie123'"
@@ -32,6 +33,7 @@ def tables():
         username char(20) NOT NULL,
         phone char(14) NOT NULL,
         isAdmin BOOLEAN NOT NULL,
+        password char(100) NOT NULL,
         registered DATE NOT NULL DEFAULT CURRENT_DATE)
     '''
     table2 = '''CREATE TABLE IF NOT EXISTS incidents(
