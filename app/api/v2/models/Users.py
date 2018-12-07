@@ -61,7 +61,6 @@ class UsersModel():
         return data
 
     def authenticate(self, username, password):
-
         dbconn = self.db
         curr = dbconn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         curr.execute(
@@ -69,17 +68,15 @@ class UsersModel():
         data = curr.fetchone()
         db_pass = data['password']
         db_password = str.strip(db_pass)
-        # if check_password_hash(db_pass, self.password):
-        if db_password == str.strip(password):
-
-            payload = {
+        if check_password_hash(db_password, password):
+            jwt_string = {
                 'exp': datetime.utcnow() + timedelta(minutes=30),
                 'iat': datetime.utcnow(),
                 'user': username
             }
-            auth_token = jwt.encode(payload, secret_key, algorithm="HS256")
-            # token = auth_token.decode('UTF-8')
-            return {"token": auth_token, "Message": "Login Successful"}
+            auth_token = jwt.encode(jwt_string, secret_key, algorithm='HS256')
+            token = auth_token.decode('UTF-8')
+            return {"token": token, "Message": "Login Successful"}
 
         else:
             return {"message": "Username or Password Incorrect"}
@@ -88,11 +85,12 @@ class UsersModel():
     def decode_token(token):
         try:
             payload = jwt.decode(token, secret_key)
-            return payload['sub']
+            username = payload['user']
+            return username
         except jwt.ExpiredSignatureError:
-            return 'Token Expired. Please log in again.'
+            return {"message": 'Token Expired. Please log in again.'}
         except jwt.InvalidTokenError:
-            return 'Invalid token. Please log in again.'
+            return {"Message": 'Invalid token. Please log in again.'}
 
 
 class UserModel():
@@ -103,28 +101,24 @@ class UserModel():
     def getUser(self, id):
         dbconn = self.db
         curr = dbconn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        # curr.execute(
-        #     """SELECT id, firstname, lastname, email, username, phone, isAdmin, registered FROM users WHERE id=%s; """, [id])
         curr.execute(
             """SELECT * FROM users WHERE id=%s; """, [id])
         data = curr.fetchone()
-        # print(data)
-        # id = data['id']
-        # firstname = data['firstname']
-        # lastname = data['lastname']
-        # email = data['email']
-        # username = data['username']
-        # phone = data['phone']
-        # isAdmin = data['isAdmin']
-        # resp = {
-        #     "firstname": firstname,
-        #     "lasname": lastname,
-        #     "email": email,
-        #     "username": username,
-        #     "phone": phone,
-        #     "isAdmin": isAdmin
-        # }
-        return data
+        id = data['id']
+        username = data['username']
+        firstname = data['firstname']
+        lastname = data['lastname']
+        email = data['email']
+        phone = data['phone']
+        resp = {
+            "id": id,
+            "firstname": firstname,
+            "lastname": lastname,
+            "username": username,
+            "email": email,
+            "phone": phone,
+        }
+        return resp
 
     def deleteUser(self, id):
         dbconn = self.db
