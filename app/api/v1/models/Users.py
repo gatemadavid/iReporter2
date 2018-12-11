@@ -33,14 +33,14 @@ class UsersModel():
             if user['id'] == user_id:
                 return users_db.remove(user)
 
-    def update_user(self, user_id, fname, lname, email, password, isAdmin):
+    def update_user(self, user_id, payload):
         for user in users_db:
             if user['id'] == user_id:
-                user['fname'] = fname
-                user['lname'] = lname
-                user['email'] = email
-                user['password'] = password
-                user['isAdmin'] = isAdmin
+                user['firstname'] = payload['firstname']
+                user['lastname'] = payload['lastname']
+                user['email'] = payload['email']
+                user['password'] = payload['password']
+                user['isAdmin'] = payload['isAdmin']
                 return user
 
     def validate_username(self, username):
