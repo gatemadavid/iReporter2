@@ -123,7 +123,9 @@ The id field is added and incremented automattically
 **Alternative API Consumption**
 The application is hosted on heroku and it can be accessed via postman on the following link:
 
+```
 - https://ireporter2-heroku.herokuapp.com/api/v1/redflags
+```
 
 **Running Tests**
 
