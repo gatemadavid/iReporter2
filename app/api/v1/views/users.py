@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import jsonify, make_response, request
-from ..models.Users import UsersModel, UserModel
+from ..models.Users import UsersModel
 
 
 class Users(Resource, UsersModel):
@@ -29,9 +29,9 @@ class Users(Resource, UsersModel):
         }), 200)
 
 
-class User(Resource, UserModel):
+class User(Resource, UsersModel):
     def __init__(self):
-        self.users_db = UserModel()
+        self.users_db = UsersModel()
 
     def get(self, user_id):
         resp = self.users_db.getUser(user_id)

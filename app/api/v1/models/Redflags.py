@@ -21,11 +21,6 @@ class RedFlagsModel():
     def get_flags(self):
         return self.db
 
-
-class SingleFlagModel():
-    def __init__(self):
-        self.db = red_flags
-
     def getSingleFlag(self, flag_id):
         for flag in red_flags:
             if flag['id'] == flag_id:
@@ -44,3 +39,5 @@ class SingleFlagModel():
                 flag['location'] = location
                 flag['type'] = incident_type
                 return flag
+
+

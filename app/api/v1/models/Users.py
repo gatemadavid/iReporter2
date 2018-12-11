@@ -22,11 +22,6 @@ class UsersModel():
     def get_users(self):
         return self.users
 
-
-class UserModel():
-    def __init__(self):
-        self.users = users_db
-
     def getUser(self, user_id):
         for user in users_db:
             if user['id'] == user_id:
