@@ -71,51 +71,54 @@ Create a python3 virtual environment using:
 
 - POST /api/vi/redflags
 
+_Expected Data format:_
 
-  _Expected Data format:_
+{
+"title":"Bad Road",
 
-  {
-  "title":"Bad Road",
+"description": "Potholes on the road",
 
+"location":"Ronald Ngars Street",
 
-  "description": "Potholes on the road",
+"type":"Intervention"
 
+}
 
-  "location":"Ronald Ngars Street",
-
-
-  "type":"Intervention"
-
-
-  }
-
-  
-  ![post](https://user-images.githubusercontent.com/27230922/49425507-e00b3080-f7ae-11e8-8cb1-be9755b7c143.png)
-
-  
+![post](https://user-images.githubusercontent.com/27230922/49425507-e00b3080-f7ae-11e8-8cb1-be9755b7c143.png)
 
 The id field is added and incremented automattically
 
 **Fetch all Redflags**
 
+```
 - GET /api/v1/redflgas
-  ![get all](https://user-images.githubusercontent.com/27230922/49426053-65431500-f7b0-11e8-92c2-1ff211e8fc31.png)
+```
+
+![get all](https://user-images.githubusercontent.com/27230922/49426053-65431500-f7b0-11e8-92c2-1ff211e8fc31.png)
 
 **Fetch one Redflag**
 
+```
 - GET /api/vi/redflags/<id>
-  ![get one](https://user-images.githubusercontent.com/27230922/49426088-83107a00-f7b0-11e8-95f1-63b8384de316.png)
+```
+
+![get one](https://user-images.githubusercontent.com/27230922/49426088-83107a00-f7b0-11e8-95f1-63b8384de316.png)
 
 **Delete a Redflag**
 
+```
 - DELETE /api/v1/redflags/<id>
+```
 
 ![delete](https://user-images.githubusercontent.com/27230922/49426392-80625480-f7b1-11e8-81a6-a1ede1453818.png)
 
 **Update Red flag**
 
+```
 - PUT /api/vi/redflgas/<id>
-  ![put](https://user-images.githubusercontent.com/27230922/49426254-16e24600-f7b1-11e8-9a02-b209da3ce7ed.png)
+```
+
+![put](https://user-images.githubusercontent.com/27230922/49426254-16e24600-f7b1-11e8-9a02-b209da3ce7ed.png)
 
 **Alternative API Consumption**
 The application is hosted on heroku and it can be accessed via postman on the following link:
@@ -124,12 +127,18 @@ The application is hosted on heroku and it can be accessed via postman on the fo
 
 **Running Tests**
 
+```
 - pytest
+```
 
 **Authors**
 
+```
 - David Muriithi Gatema
+```
 
 **License**
 
+```
 - This project is licensed under the MIT License
+```
