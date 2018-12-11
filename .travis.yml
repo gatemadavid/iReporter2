@@ -7,6 +7,14 @@ install:
   - pip install coveralls codecov
 env:
   - CODECOV_TOKEN="c81bb5e2-ad59-4b4a-b059-a776bff6394c"
+services:
+  - postgresql
+addons:
+  - postgresql:"9.5"
+before_script:
+  - psql -c 'CREATE DATABASE test_db' -U postgres
+  - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to postgres;" -U postgres
+
 script:
   - py.test --cov-report term-missing --cov app
 

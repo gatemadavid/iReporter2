@@ -3,7 +3,7 @@ from flask import jsonify, make_response, request
 from ..models.Redflags import RedFlagsModel
 
 
-class RedFlags(Resource, RedFlagsModel):
+class RedFlags(Resource):
     def __init__(self):
         self.db = RedFlagsModel()
 
@@ -25,7 +25,7 @@ class RedFlags(Resource, RedFlagsModel):
         }), 200)
 
 
-class RedFlag(Resource, RedFlagsModel):
+class RedFlag(Resource):
     def __init__(self):
         self.db = RedFlagsModel()
 

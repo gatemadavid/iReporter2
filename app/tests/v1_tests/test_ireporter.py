@@ -91,13 +91,6 @@ class RedFlagsTestCase(unittest.TestCase):
             self.user_data), content_type='application/json')
         self.assertEqual(res.status_code, 201)
 
-    # def test_delete_user(self):
-    #     res = self.client().post(users_url, data=json.dumps(
-    #         self.user_data), content_type='application/json')
-    #     self.assertEqual(res.status_code, 201)
-    #     result = self.client().delete("/api/v1/users/1")
-    #     self.assertEqual(result.status_code, 200)
-
 
 if __name__ == "__main__":
     unittest.main()

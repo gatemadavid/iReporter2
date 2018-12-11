@@ -17,8 +17,7 @@ class IncidentsView(Resource, IncidentsModel):
             res = self.db.getIncidents()
 
             return make_response(jsonify({
-                'Status': 'Ok',
-                'My Incidents': res
+                'All Incidents': res
             }), 201)
 
     def post(self):
@@ -98,6 +97,6 @@ class UserIncidentsView(Resource, IncidentsModel):
             username = str(user)
             res = self.db.getUserIncidents(username)
             return make_response(jsonify({
-                'Status': 'Ok',
+
                 'My Incidents': res
             }), 201)

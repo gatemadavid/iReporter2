@@ -83,7 +83,7 @@ class IncidentModel():
         location = data['location']
         status = data['status']
         description = data['description']
-        createdBy = data['createdBy']
+
         resp = {
             "id": id,
             "title": title,
@@ -91,7 +91,7 @@ class IncidentModel():
             "location": location,
             "status": status,
             "description": description,
-            "createdBy": createdBy,
+
         }
         return resp
 

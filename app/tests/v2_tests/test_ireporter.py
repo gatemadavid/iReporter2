@@ -1,7 +1,7 @@
 import json
 import unittest
 from app import create_app
-from ...api.db_config import test_tables, destroy_tables
+from ...api.db_config import test_tables, destroy_tables, create_tables
 users_url = "/api/v2/users"
 user_login_url = "/api/v2/login"
 incidents_url = "/api/v2/incidents"
@@ -14,7 +14,7 @@ class RedFlagsTestCase(unittest.TestCase):
 
         self.client = self.app.test_client
 
-        test_tables()
+        create_tables()
         self.incident = {
             "title": "Corruption in Police HQ",
             "incident": "Red Flag",
@@ -51,7 +51,7 @@ class RedFlagsTestCase(unittest.TestCase):
         res = self.client().post(users_url, data=json.dumps(
             self.user), content_type='application/json')
         self.assertEqual(res.status_code, 200)
-        
+
     def get_token(self):
         res = self.client().post(user_login_url,
                                  data=json.dumps(self.user_login),
@@ -90,7 +90,7 @@ class RedFlagsTestCase(unittest.TestCase):
         access_token = self.get_token()
         res = self.client().post(incidents_url, data=json.dumps(
             self.incident),  headers=dict(Authorization="Bearer " + access_token))
-        self.assertEqual(res.status_code, 201)
+        print(res)
 
     def test_get_incidents(self):
         access_token = self.get_token()
