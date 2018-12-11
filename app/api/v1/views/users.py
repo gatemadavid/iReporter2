@@ -3,7 +3,7 @@ from flask import jsonify, make_response, request
 from ..models.Users import UsersModel
 
 
-class Users(Resource, UsersModel):
+class Users(Resource):
     def __init__(self):
         self.users_db = UsersModel()
 
@@ -29,7 +29,7 @@ class Users(Resource, UsersModel):
         }), 200)
 
 
-class User(Resource, UsersModel):
+class User(Resource):
     def __init__(self):
         self.users_db = UsersModel()
 

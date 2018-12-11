@@ -1,11 +1,9 @@
+import psycopg2.extras
+from datetime import datetime, timedelta
 from ...db_config import init_db
 from werkzeug.security import check_password_hash
 import jwt
 import os
-
-from datetime import datetime, timedelta
-import psycopg2.extras
-
 
 secret_key = os.getenv('SECRET')
 
@@ -91,6 +89,11 @@ class UsersModel():
             return {"message": 'Token Expired. Please log in again.'}
         except jwt.InvalidTokenError:
             return {"Message": 'Invalid token. Please log in again.'}
+
+    # def token_required(f):
+    #     @wraps(f)
+    #     def decorated(*args, **kwargs):
+    #         token = None
 
 
 class UserModel():

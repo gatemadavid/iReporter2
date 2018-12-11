@@ -36,7 +36,7 @@ class UsersView(Resource, UsersModel):
             return make_response(jsonify({
                 "Message": "User Registered. Please login"
             }), 201)
-
+    
     def get(self):
         auth_header = request.headers.get('Authorization')
         access_token = auth_header.split(" ")[1]
@@ -61,6 +61,7 @@ class LoginView(Resource, UsersModel):
         username = data['username']
         password = data['password']
         auth = self.db.authenticate(username, password)
+        print(auth)
         return auth
 
 
