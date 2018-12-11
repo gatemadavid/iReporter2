@@ -32,7 +32,6 @@ class Users(Resource):
                 "password": password,
                 "is_admin": is_admin
             }
-            print(payload)
         self.users_db.save(payload)
         return make_response(jsonify({
             "message": "User Created",
@@ -65,15 +64,20 @@ class User(Resource):
 
     def put(self, user_id):
         data = request.get_json()
-        fname = data['fname']
-        lname = data['lname']
+        firstname = data['firstname']
+        lastname = data['lastname']
         email = data['email']
         password = data['password']
         is_admin = data['password']
-        resp = self.users_db.update_user(
-            user_id, fname, lname, email, password, is_admin)
+        payload = {
+            "firstname": firstname,
+            "lastname": lastname,
+            "email": email,
+            "password": password,
+            "is_admin": is_admin
+        }
+        self.users_db.update_user(user_id, payload)
         return make_response(jsonify({
             "Status": 200,
-            "Message": "Incident updated",
-            "data": resp
+            "Message": "Incident updated"
         }), 200)
