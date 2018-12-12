@@ -14,7 +14,7 @@ class Users(Resource):
         uname = data['username']
         raw_email = data['email']
         password = data['password']
-        is_admin = data['isAdmin']
+        is_admin = data['is_admin']
         valid_username = self.users_db.validate_username(uname)
         valid_email = self.users_db.validate_email(raw_email)
 
@@ -50,17 +50,17 @@ class User(Resource):
         self.users_db = UsersModel()
 
     def get(self, user_id):
-        resp = self.users_db.get_user(user_id)
+        resp = self.users_db.get_single_user(user_id)
         return make_response(jsonify({
             "Message": "success",
             "User": resp
         }), 200)
 
     def delete(self, user_id):
-        self.users_db.delete_user(user_id)
-        return make_response(jsonify({
+        self.users_db.delete_single_user(user_id)
+        return {
             "Message": "User Deleted"
-        }), 204)
+        }
 
     def put(self, user_id):
         data = request.get_json()
@@ -68,7 +68,7 @@ class User(Resource):
         lastname = data['lastname']
         email = data['email']
         password = data['password']
-        is_admin = data['password']
+        is_admin = data['is_admin']
         payload = {
             "firstname": firstname,
             "lastname": lastname,
@@ -79,5 +79,5 @@ class User(Resource):
         self.users_db.update_user(user_id, payload)
         return make_response(jsonify({
             "Status": 200,
-            "Message": "Incident updated"
+            "Message": "user updated"
         }), 200)
