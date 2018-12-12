@@ -34,7 +34,8 @@ class RedFlagsModel():
 
     def update_flag(self, flag_id, description, location):
         for flag in red_flags:
-            if flag['id'] == flag_id and flag['status'] == 'new':
+            if flag['id'] == flag_id:
                 flag['description'] = description
                 flag['location'] = location
                 return flag
+    
