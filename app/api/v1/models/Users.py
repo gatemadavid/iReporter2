@@ -23,12 +23,12 @@ class UsersModel():
     def get_users(self):
         return self.users
 
-    def get_user(self, user_id):
+    def get_single_user(self, user_id):
         for user in users_db:
             if user['id'] == user_id:
                 return user
 
-    def delete_user(self, user_id):
+    def delete_single_user(self, user_id):
         for user in users_db:
             if user['id'] == user_id:
                 return users_db.remove(user)
@@ -40,13 +40,13 @@ class UsersModel():
                 user['lastname'] = payload['lastname']
                 user['email'] = payload['email']
                 user['password'] = payload['password']
-                user['isAdmin'] = payload['isAdmin']
+                user['is_admin'] = payload['is_admin']
                 return user
 
     def validate_username(self, username):
         if len(username) < 7:
             return False
-        elif not re.match("^[a-zA-Z0-9_.-]+$", username):
+        elif not re.match("^[a-zA-Z0-9_-]+$", username):
             return False
         else:
             return True
