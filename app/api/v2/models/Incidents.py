@@ -6,25 +6,25 @@ class IncidentsModel():
     def __init__(self):
         self.db = init_db()
 
-    def save(self, title, incident, location, status, description, createdBy):
+    def save(self, title, incident, location, description, images, createdBy):
         payload = {
             'title': title,
             'incident': incident,
             'location': location,
-            'status': status,
             'description': description,
+            'images': images,
             'createdBy': createdBy
         }
 
-        query = """INSERT INTO incidents (title, incident, location, status, description, createdBy) VALUES
-            (%(title)s, %(incident)s, %(location)s, %(status)s, %(description)s, %(createdBy)s)"""
+        query = """INSERT INTO incidents (title, incident, location, description, images, createdBy) VALUES
+            (%(title)s, %(incident)s, %(location)s, %(description)s, %(images)s, %(createdBy)s)"""
 
         curr = self.db.cursor()
         curr.execute(query, payload)
         self.db.commit()
         return payload
 
-    def getIncidents(self):
+    def get_incidents(self):
         dbconn = self.db
         curr = dbconn.cursor()
         curr.execute(
@@ -46,7 +46,7 @@ class IncidentsModel():
             resp.append(res)
         return resp
 
-    def getUserIncidents(self, username):
+    def get_user_incidents(self, username):
         dbconn = self.db
         curr = dbconn.cursor()
         curr.execute(
@@ -66,12 +66,7 @@ class IncidentsModel():
             resp.append(res)
         return resp
 
-
-class IncidentModel():
-    def __init__(self):
-        self.db = init_db()
-
-    def getIncident(self, id):
+    def get_one_incident(self, id):
         dbconn = self.db
         curr = dbconn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         curr.execute(
@@ -95,24 +90,23 @@ class IncidentModel():
         }
         return resp
 
-    def deleteIncident(self, id):
+    def delete_incident(self, id):
         dbconn = self.db
         curr = dbconn.cursor()
         curr.execute("""DELETE FROM incidents WHERE id=%s""", [id])
         self.db.commit()
-        return {"Message": "Incident Deleted"}
+        return ("Incident Deleted")
 
-    def updateIncident(self, id, title, incident, location, status, description, createdBy):
-        dbconn = self.db
-        curr = dbconn.cursor()
-        # check status of incident
+    def update_incident(self, id, title, incident, location, description, images):
+        curr = self.db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         curr.execute("""SELECT status FROM incidents where id=%s;""", [id])
-        status = curr.fetchone()
-        if status == "new":
-            curr.execute("UPDATE incidents SET title=%s, incident=%s, location=%s, status=%s, description=%s, createdBy=%s WHERE id=%s",
-                         (title, incident, location, status, description, createdBy, id))
-
-            self.db.commit()
-            return {"Message": "Incident Updated"}
+        resp = curr.fetchone()
+        data = resp['status']
+        status = str.strip(data)
+        if status != "Draft":
+            return ("Incident Cannot be Updated")
         else:
-            return {"Message": "Incident Cannot be Updated"}
+            curr.execute("UPDATE incidents SET title=%s, incident=%s, location=%s, description=%s, images=%s WHERE id=%s",
+                         (title, incident, location, description, images, id))
+            self.db.commit()
+            return ("Incident Has Been Updated")
