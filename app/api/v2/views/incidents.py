@@ -1,24 +1,29 @@
 from flask_restful import Resource
-from flask import jsonify, make_response, request
+from flask import jsonify, make_response, request, abort
 
-from ..models.Incidents import IncidentsModel, IncidentModel
+from ..models.Incidents import IncidentsModel
 from ..models.Users import UsersModel
 
 
-class IncidentsView(Resource, IncidentsModel):
+class IncidentsView(Resource):
     def __init__(self):
         self.db = IncidentsModel()
         self.users = UsersModel()
 
     def get(self):
-        auth_header = request.headers.get('Authorization')
-        access_token = auth_header.split(" ")[1]
-        if access_token:
-            res = self.db.getIncidents()
+        try:
+            auth_header = request.headers.get('Authorization')
+            access_token = auth_header.split(" ")[1]
+            if access_token:
+                res = self.db.get_incidents()
 
-            return make_response(jsonify({
-                'All Incidents': res
-            }), 201)
+                return make_response(jsonify({
+                    'All Incidents': res
+                }), 201)
+            else:
+                abort(500)
+        except ValueError:
+            abort(500)
 
     def post(self):
         auth_header = request.headers.get('Authorization')
@@ -30,26 +35,24 @@ class IncidentsView(Resource, IncidentsModel):
             title = data['title']
             incident = data['incident']
             location = data['location']
-            status = data['status']
             description = data['description']
-            # createdBy = data['createdBy']
+            images = data['images']
             self.db.save(title, incident, location,
-                         status, description, createdBy)
+                         description, images, createdBy)
             return make_response(jsonify({
-                'Status': 'Ok',
                 'Message': 'Incident Created'
             }), 201)
 
 
-class IncidentView(Resource, IncidentModel):
+class IncidentView(Resource):
     def __init__(self):
-        self.db = IncidentModel()
+        self.db = IncidentsModel()
 
     def get(self, id):
         auth_header = request.headers.get('Authorization')
         access_token = auth_header.split(" ")[1]
         if access_token:
-            res = self.db.getIncident(id)
+            res = self.db.get_one_incident(id)
             return make_response(jsonify({
                 'Status': 'Ok',
                 'My Incident': res
@@ -59,10 +62,10 @@ class IncidentView(Resource, IncidentModel):
         auth_header = request.headers.get('Authorization')
         access_token = auth_header.split(" ")[1]
         if access_token:
-            self.db.deleteIncident(id)
-            return {
-                "Message": "Incident Deleted"
-            }
+            resp = self.db.delete_incident(id)
+            return make_response(jsonify({
+                'Message': resp
+            }), 201)
 
     def put(self, id):
         auth_header = request.headers.get('Authorization')
@@ -72,18 +75,17 @@ class IncidentView(Resource, IncidentModel):
             title = data['title']
             incident = data['incident']
             location = data['location']
-            status = data['status']
             description = data['description']
-            createdBy = data['createdBy']
-            self.db.updateIncident(id, title, incident, location,
-                                   status, description, createdBy)
+            images = data['images']
+
+            resp = self.db.update_incident(id, title, incident, location,
+                                           description, images)
             return make_response(jsonify({
-                'Status': 'Ok',
-                'Message': 'Incident Updated'
+                'Message': resp
             }), 201)
 
 
-class UserIncidentsView(Resource, IncidentsModel):
+class UserIncidentsView(Resource):
     def __init__(self):
         self.db = IncidentsModel()
         self.users = UsersModel()
@@ -95,7 +97,7 @@ class UserIncidentsView(Resource, IncidentsModel):
         if access_token:
             user = self.users.decode_token(access_token)
             username = str(user)
-            res = self.db.getUserIncidents(username)
+            res = self.db.get_user_incidents(username)
             return make_response(jsonify({
 
                 'My Incidents': res
