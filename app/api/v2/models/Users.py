@@ -6,6 +6,7 @@ import jwt
 import os
 
 secret_key = os.getenv('SECRET')
+url = os.getenv('DATABASE_URL')
 
 
 class UsersModel():
@@ -29,7 +30,7 @@ class UsersModel():
         self.db.commit()
         return payload
 
-    def getusers(self):
+    def get_users(self):
         conn = self.db
         curr = conn.cursor()
         curr.execute(
@@ -51,57 +52,14 @@ class UsersModel():
             response.append(data)
         return response
 
-    def registerUsers(self, username):
+    def register_users(self, username):
         dbconn = self.db
         curr = dbconn.cursor()
         curr.execute("""SELECT * FROM users WHERE username=%s""", [username])
         data = curr.fetchall()
         return data
 
-    def authenticate(self, username, password):
-        dbconn = self.db
-        curr = dbconn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        curr.execute(
-            """SELECT password FROM users WHERE username=%s""", [username])
-        data = curr.fetchone()
-        db_pass = data['password']
-        db_password = str.strip(db_pass)
-        if check_password_hash(db_password, password):
-            jwt_string = {
-                'exp': datetime.utcnow() + timedelta(minutes=30),
-                'iat': datetime.utcnow(),
-                'user': username
-            }
-            auth_token = jwt.encode(jwt_string, secret_key, algorithm='HS256')
-            token = auth_token.decode('UTF-8')
-            return {"token": token, "Message": "Login Successful"}
-
-        else:
-            return {"message": "Username or Password Incorrect"}
-
-    @staticmethod
-    def decode_token(token):
-        try:
-            payload = jwt.decode(token, secret_key)
-            username = payload['user']
-            return username
-        except jwt.ExpiredSignatureError:
-            return {"message": 'Token Expired. Please log in again.'}
-        except jwt.InvalidTokenError:
-            return {"Message": 'Invalid token. Please log in again.'}
-
-    # def token_required(f):
-    #     @wraps(f)
-    #     def decorated(*args, **kwargs):
-    #         token = None
-
-
-class UserModel():
-
-    def __init__(self):
-        self.db = init_db()
-
-    def getUser(self, id):
+    def get_single_user(self, id):
         dbconn = self.db
         curr = dbconn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         curr.execute(
@@ -123,14 +81,14 @@ class UserModel():
         }
         return resp
 
-    def deleteUser(self, id):
+    def delete_user(self, id):
         dbconn = self.db
         curr = dbconn.cursor()
         curr.execute("""DELETE FROM users WHERE id=%s""", [id])
         self.db.commit()
         return {"Message": "User Deleted"}
 
-    def updateUser(self, id, firstname, lastname, email, username, phone, isAdmin, password):
+    def update_user(self, id, firstname, lastname, email, username, phone, isAdmin, password):
         dbconn = self.db
         curr = dbconn.cursor()
 
@@ -139,3 +97,44 @@ class UserModel():
 
         self.db.commit()
         return {"Message": "User Updated"}
+
+    def authenticate(self, username, password):
+        dbconn = self.db
+        curr = dbconn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        curr.execute(
+            """SELECT password, isAdmin FROM users WHERE username=%s""", [username])
+        data = curr.fetchone()
+        db_pass = data['password']
+        db_password = str.strip(db_pass)
+        is_admin = data[1]
+        if check_password_hash(db_password, password):
+            jwt_string = {
+                'exp': datetime.utcnow() + timedelta(minutes=30),
+                'iat': datetime.utcnow(),
+                'user': username,
+                "admin": is_admin
+            }
+            auth_token = jwt.encode(jwt_string, secret_key, algorithm='HS256')
+            token = auth_token.decode('UTF-8')
+            return {"token": token, "Message": "Login Successful"}
+
+        else:
+            return {"message": "Username or Password Incorrect"}
+
+    def decode_token(self, token):
+        try:
+            payload = jwt.decode(token, secret_key)
+            username = payload['user']
+            is_admin = payload['admin']
+            print(is_admin)
+            return username
+        except jwt.ExpiredSignatureError:
+            return {"message": 'Token Expired. Please log in again.'}
+        except jwt.InvalidTokenError:
+            return {"Message": 'Invalid token. Please log in again.'}
+
+    # def token_required(f):
+    #     @wraps(f)
+    #     def decorated(*args, **kwargs):
+    #         token = None
+    #         if
