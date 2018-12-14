@@ -1,10 +1,9 @@
 import psycopg2
 import psycopg2.extras
+import os
 
 
-url = "dbname='ireporter' host='localhost' port='5432' user='david' password='davie123'"
-
-test_url = "dbname='test_db' host='localhost' port='5432' user='postgres' password='davie123'"
+url = os.getenv('DATABASE_URL')
 
 
 def connection(url):
@@ -19,15 +18,6 @@ def init_db():
 
 def create_tables():
     conn = connection(url)
-    curr = conn.cursor()
-    queries = tables()
-    for query in queries:
-        curr.execute(query)
-    conn.commit()
-
-
-def test_tables():
-    conn = psycopg2.connect(test_url)
     curr = conn.cursor()
     queries = tables()
     for query in queries:
@@ -52,8 +42,9 @@ def tables():
         title char(100) NOT NULL,
         incident char(50) NOT NULL,
         location char(100) NOT NULL,
-        status char(50) NOT NULL,
+        status char(30) DEFAULT 'Draft',
         description char(200) NOT NULL,
+        images char(100) NOT NULL,
         createdBy char(100) NOT NULL,
         createdOn DATE NOT NULL DEFAULT CURRENT_DATE)    '''
 
@@ -62,7 +53,7 @@ def tables():
 
 
 def destroy_tables():
-    conn = connection(test_url)
+    conn = connection(url)
     curr = conn.cursor()
     users_table = ''' DROP TABLE IF EXISTS users CASCADE'''
     incidents_table = ''' DROP TABLE IF EXISTS incidents CASCADE'''
