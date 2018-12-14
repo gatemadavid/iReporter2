@@ -1,14 +1,12 @@
 from unittest import TestCase
 
 from app import create_app
-from ...api.db_config import create_tables
+from ...api.db_config import create_tables, destroy_tables
 
 
 class BaseTest(TestCase):
     def setUp(self):
-        create_app.testing = True
-
-        self.app = create_app(config_name='testing').test_client
+        self.app = create_app('testing').test_client
 
         create_tables()
 
@@ -51,4 +49,6 @@ class BaseTest(TestCase):
             "password": "1233"
 
         }
-        
+
+    def tearDown(self):
+        destroy_tables()
