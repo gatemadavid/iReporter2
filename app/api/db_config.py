@@ -2,8 +2,7 @@ import psycopg2
 import psycopg2.extras
 import os
 
-
-url = os.getenv('DATABASE_URL')
+url = os.getenv('DATABASE_TEST_URL')
 
 
 def connection(url):
