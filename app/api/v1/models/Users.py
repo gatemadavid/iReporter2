@@ -6,15 +6,20 @@ class UsersModel():
     def __init__(self):
         self.users = users_db
 
-    def saveUser(self, fname, lname, email, password, is_admin):
+    def saveUser(self, data):
         user_id = len(users_db) + 1
+        fname = data['fname']
+        lname = data['lname']
+        email = data['email']
+        password = data['password']
+        isAdmin = data['isAdmin']
         user_data = {
             "id": user_id,
             "fname": fname,
             "lname": lname,
             "email": email,
             "password": password,
-            "is_admin": is_admin
+            "isAdmin": isAdmin
         }
         self.users.append(user_data)
         return self.users
@@ -32,7 +37,12 @@ class UsersModel():
             if user['id'] == user_id:
                 return users_db.remove(user)
 
-    def updateUser(self, user_id, fname, lname, email, password, isAdmin):
+    def updateUser(self, user_id, data):
+        fname = data['fname']
+        lname = data['lname']
+        email = data['email']
+        password = data['password']
+        isAdmin = data['isAdmin']
         for user in users_db:
             if user['id'] == user_id:
                 user['fname'] = fname
