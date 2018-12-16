@@ -9,11 +9,7 @@ class RedFlags(Resource):
 
     def post(self):
         data = request.get_json()
-        title = data['title']
-        description = data['description']
-        location = data['location']
-        incident_type = data['type']
-        self.db.save(title, description, location, incident_type)
+        self.db.save(data)
         return make_response(jsonify({
             "message": "Red Flag Created"
         }), 201)
@@ -44,14 +40,8 @@ class RedFlag(Resource):
 
     def put(self, flag_id):
         data = request.get_json()
-        title = data['title']
-        description = data['description']
-        location = data['location']
-        incident_type = data['type']
-        resp = self.db.updateFlag(
-            flag_id, title, description, location, incident_type)
+        self.db.updateFlag(flag_id, data)
         return make_response(jsonify({
             "Status": 200,
-            "Message": "Incident updated",
-            "data": resp
+            "Message": "Incident updated"
         }), 200)
