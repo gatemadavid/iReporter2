@@ -9,16 +9,9 @@ class Users(Resource):
 
     def post(self):
         data = request.get_json()
-        fname = data['fname']
-        lname = data['lname']
-        email = data['email']
-        password = data['password']
-        is_admin = data['password']
-        resp = self.users_db.saveUser(
-            fname, lname, email, password, is_admin)
+        self.users_db.saveUser(data)
         return make_response(jsonify({
-            "message": "User Created",
-            "Users": resp
+            "message": "User Created"
         }), 201)
 
     def get(self):
@@ -48,15 +41,9 @@ class User(Resource):
 
     def put(self, user_id):
         data = request.get_json()
-        fname = data['fname']
-        lname = data['lname']
-        email = data['email']
-        password = data['password']
-        is_admin = data['password']
-        resp = self.users_db.updateUser(
-            user_id, fname, lname, email, password, is_admin)
+        self.users_db.updateUser(user_id, data)
         return make_response(jsonify({
             "Status": 200,
-            "Message": "Incident updated",
-            "data": resp
+            "Message": "User updated",
+
         }), 200)
