@@ -12,4 +12,17 @@ def create_app(config_name):
     create_tables()
     app.register_blueprint(v1)
     app.register_blueprint(v2)
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return 'The requested page does not exist. Kindly check your url'
+
+    @app.errorhandler(403)
+    def forbidden_access(e):
+        return 'Access forbiden'
+
+    @app.errorhandler(500)
+    def internal_server_error(e):
+        return 'An error occurred. Make sure you have the permission to access this resource'
+
     return app
