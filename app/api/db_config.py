@@ -32,7 +32,7 @@ def tables():
         email char(50) NOT NULL,
         username char(20) NOT NULL,
         phone char(14) NOT NULL,
-        isAdmin BOOLEAN NOT NULL DEFAULT False,
+        isAdmin BOOLEAN DEFAULT False,
         password char(100) NOT NULL,
         registered DATE NOT NULL DEFAULT CURRENT_DATE)
     '''
