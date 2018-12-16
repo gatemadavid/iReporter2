@@ -3,6 +3,7 @@ from flask import jsonify, make_response, request, abort
 
 from ..models.Incidents import IncidentsModel
 from ..models.Users import UsersModel
+from app.api.validations.validations import Validations
 
 
 class IncidentsView(Resource):
@@ -32,21 +33,22 @@ class IncidentsView(Resource):
             user = self.users.decode_token(access_token)
             createdBy = str(user)
             data = request.get_json()
-            title = data['title']
-            incident = data['incident']
-            location = data['location']
-            description = data['description']
-            images = data['images']
-            self.db.save(title, incident, location,
-                         description, images, createdBy)
-            return make_response(jsonify({
-                'Message': 'Incident Created'
-            }), 201)
+            resp = Validations().validate_incident_details(data, createdBy)
+            if resp == str(resp):
+                return make_response(jsonify({
+                    "Message": resp
+                }), 201)
+            else:
+                self.db.save(resp)
+                return make_response(jsonify({
+                    'Message': 'Incident Created'
+                }), 201)
 
 
 class IncidentView(Resource):
     def __init__(self):
         self.db = IncidentsModel()
+        self.users = UsersModel()
 
     def get(self, id):
         auth_header = request.headers.get('Authorization')
@@ -71,18 +73,19 @@ class IncidentView(Resource):
         auth_header = request.headers.get('Authorization')
         access_token = auth_header.split(" ")[1]
         if access_token:
+            user = self.users.decode_token(access_token)
+            createdBy = str(user)
             data = request.get_json()
-            title = data['title']
-            incident = data['incident']
-            location = data['location']
-            description = data['description']
-            images = data['images']
-
-            resp = self.db.update_incident(id, title, incident, location,
-                                           description, images)
-            return make_response(jsonify({
-                'Message': resp
-            }), 201)
+            resp = Validations().validate_incident_details(data, createdBy)
+            if resp == str(resp):
+                return make_response(jsonify({
+                    "Message": resp
+                }), 201)
+            else:
+                self.db.update_incident(id, resp)
+                return make_response(jsonify({
+                    'Message': 'Incident Updated'
+                }), 201)
 
 
 class UserIncidentsView(Resource):
