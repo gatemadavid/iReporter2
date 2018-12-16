@@ -30,7 +30,7 @@ class RedFlagsTestCase(unittest.TestCase):
             "lname": "Gatema",
             "email": "david@gmail.com",
             "password": "password",
-            "is_admin": "true"
+            "isAdmin": "true"
         }
         self.client = self.app.test_client
 
