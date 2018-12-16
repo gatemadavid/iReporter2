@@ -6,14 +6,14 @@ class RedFlagsModel():
     def __init__(self):
         self.db = red_flags
 
-    def save(self, title, description, location, incident_type):
+    def save(self, data):
         id = len(red_flags) + 1
         payload = {
             "id": id,
-            "title": title,
-            "description": description,
-            "location": location,
-            "type": incident_type
+            "title": data['title'],
+            "description":  data['description'],
+            "location": data['location'],
+            "type": data['type']
         }
         self.db.append(payload)
         return self.db
@@ -31,13 +31,11 @@ class RedFlagsModel():
             if flag['id'] == flag_id:
                 return red_flags.remove(flag)
 
-    def updateFlag(self, flag_id, title, description, location, incident_type):
+    def updateFlag(self, flag_id, data):
         for flag in red_flags:
             if flag['id'] == flag_id:
-                flag['title'] = title
-                flag['description'] = description
-                flag['location'] = location
-                flag['type'] = incident_type
+                flag['title'] = data['title']
+                flag['description'] = data['description']
+                flag['location'] = data['location']
+                flag['type'] = data['type']
                 return flag
-
-
