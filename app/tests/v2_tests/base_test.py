@@ -11,18 +11,18 @@ class BaseTest(TestCase):
         create_tables()
 
         self.incident = {
-            "title": "Corruption in Police",
-            "incident": "Redflag",
-            "location": "Ronald Ngala Street",
+            "title": "Bad Roads in Kasarani",
+            "incident": "intervention",
+            "location": "-1.292066, 36.821945",
             "description": "Potholes on the road",
             "images": "pothole.jpg"
         }
         self.incident2 = {
-            "title": "Corruption in Lands ministry",
+            "title": "Corruption in Police Station",
             "incident": "intervention",
-            "location": "Ardhi house",
-            "description": "Bribing officials",
-            "images": "corrupt.jpg"
+            "location": "-1.292066, 36.821945",
+            "description": "Potholes on the road",
+            "images": "pothole.jpg"
         }
         self.user = {
 
@@ -31,8 +31,7 @@ class BaseTest(TestCase):
             "email": "Muriithi@gmail.com",
             "username": "muriithi",
             "phone": "98890",
-            "isAdmin": "false",
-            "password": "1233"
+            "password": "123qwwww3"
         }
         self.user2 = {
             "firstname": "Daniel",
@@ -46,7 +45,7 @@ class BaseTest(TestCase):
         self.user_login = {
 
             "username": "muriithi",
-            "password": "1233"
+            "password": "123qwwww3"
 
         }
 
