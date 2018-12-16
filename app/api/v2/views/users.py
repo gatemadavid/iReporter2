@@ -6,6 +6,8 @@ from ..models.Users import UsersModel
 
 from ..models.Incidents import IncidentsModel
 
+from app.api.validations.validations import Validations
+
 
 class UsersView(Resource):
     def __init__(self):
@@ -13,24 +15,19 @@ class UsersView(Resource):
 
     def post(self):
         data = request.get_json()
-        firstname = data['firstname']
-        lastname = data['lastname']
-        email = data['email']
+        resp = Validations().validate_user_inputs(data)
         username = data['username']
-        phone = data['phone']
-        isAdmin = data['isAdmin']
-        raw_pass = data['password']
-        password = generate_password_hash(raw_pass)
-
         user = self.db.register_users(username)
         if len(user) != 0:
             return make_response(jsonify({
                 'Message': 'Username already exists'
             }), 202)
-
+        elif resp == str(resp):
+            return make_response(jsonify({
+                "Message": resp
+            }), 201)
         else:
-            self.db.save(firstname, lastname, email,
-                         username, phone, isAdmin, password)
+            self.db.save(resp)
             return make_response(jsonify({
                 "Message": "User Registered. Please login"
             }), 201)
@@ -89,17 +86,13 @@ class UserView(Resource, ):
         access_token = auth_header.split(" ")[1]
         if access_token:
             data = request.get_json()
-            firstname = data['firstname']
-            lastname = data['lastname']
-            email = data['email']
-            username = data['username']
-            phone = data['phone']
-            isAdmin = data['isAdmin']
-            password = data['password']
-
-            self.db.update_user(id, firstname, lastname, email,
-                                username, phone, isAdmin, password)
-            return make_response(jsonify({
-                'Status': 'Ok',
-                'Message': 'User Details Updated'
-            }), 201)
+            resp = Validations().validate_user_inputs(data)
+            if resp == str(resp):
+                return make_response(jsonify({
+                    "Message": resp
+                }), 201)
+            else:
+                self.db.update_user(id, resp)
+                return make_response(jsonify({
+                    'Message': 'User Details Updated'
+                }), 201)
