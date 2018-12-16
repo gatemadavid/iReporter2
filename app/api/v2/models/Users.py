@@ -13,18 +13,9 @@ class UsersModel():
     def __init__(self):
         self.db = init_db()
 
-    def save(self, firstname, lastname, email, username, phone, isAdmin, password):
-        payload = {
-            "firstname": firstname,
-            "lastname": lastname,
-            "email": email,
-            "username": username,
-            "phone": phone,
-            "isAdmin": isAdmin,
-            "password": password
-        }
-        query = """INSERT INTO users (firstname, lastname, email, username, phone, isAdmin, password) VALUES
-            (%(firstname)s, %(lastname)s, %(email)s, %(username)s, %(phone)s, %(isAdmin)s, %(password)s)"""
+    def save(self, payload):
+        query = """INSERT INTO users (firstname, lastname, email, username, phone, password) VALUES
+            (%(firstname)s, %(lastname)s, %(email)s, %(username)s, %(phone)s, %(password)s)"""
         curr = self.db.cursor()
         curr.execute(query, payload)
         self.db.commit()
@@ -88,12 +79,17 @@ class UsersModel():
         self.db.commit()
         return {"Message": "User Deleted"}
 
-    def update_user(self, id, firstname, lastname, email, username, phone, isAdmin, password):
+    def update_user(self, id, payload):
+        firstname = payload['firstname']
+        lastname = payload['lastname']
+        email = payload['email']
+        username = payload['username']
+        phone = payload['phone']
+        password = payload['password']
         dbconn = self.db
         curr = dbconn.cursor()
-
-        curr.execute("UPDATE users SET firstname=%s, lastname=%s, email=%s, username=%s, phone=%s, isAdmin=%s, password=%s WHERE id=%s",
-                     (firstname, lastname, email, username, phone, isAdmin, password, id))
+        curr.execute("UPDATE users SET firstname=%s, lastname=%s, email=%s, username=%s, phone=%s, password=%s WHERE id=%s",
+                     (firstname, lastname, email, username, phone, password, id))
 
         self.db.commit()
         return {"Message": "User Updated"}
@@ -123,7 +119,7 @@ class UsersModel():
 
     def decode_token(self, token):
         try:
-            payload = jwt.decode(token, secret_key)
+            payload = jwt.decode(token, secret_key, algorithms='HS256')
             username = payload['user']
             is_admin = payload['admin']
             print(is_admin)
