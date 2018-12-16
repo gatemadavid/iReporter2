@@ -6,15 +6,7 @@ class IncidentsModel():
     def __init__(self):
         self.db = init_db()
 
-    def save(self, title, incident, location, description, images, createdBy):
-        payload = {
-            'title': title,
-            'incident': incident,
-            'location': location,
-            'description': description,
-            'images': images,
-            'createdBy': createdBy
-        }
+    def save(self, payload):
 
         query = """INSERT INTO incidents (title, incident, location, description, images, createdBy) VALUES
             (%(title)s, %(incident)s, %(location)s, %(description)s, %(images)s, %(createdBy)s)"""
@@ -97,15 +89,20 @@ class IncidentsModel():
         self.db.commit()
         return ("Incident Deleted")
 
-    def update_incident(self, id, title, incident, location, description, images):
+    def update_incident(self, id, payload):
         curr = self.db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         curr.execute("""SELECT status FROM incidents where id=%s;""", [id])
         resp = curr.fetchone()
         data = resp['status']
         status = str.strip(data)
         if status != "Draft":
-            return ("Incident Cannot be Updated")
+            return "Incident Cannot be Updated"
         else:
+            title = payload['title']
+            incident = payload['incident']
+            location = payload['location']
+            description = payload['description']
+            images = payload['images']
             curr.execute("UPDATE incidents SET title=%s, incident=%s, location=%s, description=%s, images=%s WHERE id=%s",
                          (title, incident, location, description, images, id))
             self.db.commit()
