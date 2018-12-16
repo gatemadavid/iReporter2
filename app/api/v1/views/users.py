@@ -41,9 +41,10 @@ class User(Resource):
 
     def put(self, user_id):
         data = request.get_json()
-        self.users_db.updateUser(user_id, data)
+        resp = self.users_db.updateUser(user_id, data)
         return make_response(jsonify({
             "Status": 200,
             "Message": "User updated",
+            "User": resp
 
         }), 200)
