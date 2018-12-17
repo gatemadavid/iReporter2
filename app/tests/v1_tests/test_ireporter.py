@@ -10,7 +10,7 @@ users_url = "/api/v1/users"
 
 class RedFlagsTestCase(unittest.TestCase):
     def setUp(self):
-        self.app = create_app('testing')
+        self.app = create_app()
 
         self.payload = {
             "id": "1",
