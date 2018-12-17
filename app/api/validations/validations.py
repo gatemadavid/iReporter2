@@ -1,8 +1,17 @@
 import re
 from werkzeug.security import generate_password_hash
+from flask import request
 
 
 class Validations():
+    def get_access_token(self):
+        try:
+            auth_header = request.headers.get('Authorization')
+            access_token = auth_header.split(" ")[1]
+            return access_token
+        except:
+            return None
+
     def validate_username(self, username):
         if len(username) < 5:
             return False

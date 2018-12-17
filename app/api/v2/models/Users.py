@@ -5,6 +5,7 @@ from werkzeug.security import check_password_hash
 import jwt
 import os
 
+
 secret_key = os.getenv('SECRET')
 url = os.getenv('DATABASE_URL')
 
@@ -98,7 +99,8 @@ class UsersModel():
         dbconn = self.db
         curr = dbconn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         curr.execute(
-            """SELECT password, isAdmin FROM users WHERE username=%s""", [username])
+            """SELECT password, isAdmin FROM users WHERE username=%s""",
+            [username])
         data = curr.fetchone()
         db_pass = data['password']
         db_password = str.strip(db_pass)
@@ -122,15 +124,8 @@ class UsersModel():
             payload = jwt.decode(token, secret_key, algorithms='HS256')
             username = payload['user']
             is_admin = payload['admin']
-            print(is_admin)
             return username
         except jwt.ExpiredSignatureError:
-            return {"message": 'Token Expired. Please log in again.'}
+            return None
         except jwt.InvalidTokenError:
-            return {"Message": 'Invalid token. Please log in again.'}
-
-    # def token_required(f):
-    #     @wraps(f)
-    #     def decorated(*args, **kwargs):
-    #         token = None
-    #         if
+            return None

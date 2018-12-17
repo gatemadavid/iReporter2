@@ -1,6 +1,5 @@
 from flask_restful import Resource
-from flask import jsonify, make_response, request, abort
-from werkzeug.security import generate_password_hash
+from flask import jsonify, make_response, request
 
 from ..models.Users import UsersModel
 
@@ -33,17 +32,15 @@ class UsersView(Resource):
             }), 201)
 
     def get(self):
-        auth_header = request.headers.get('Authorization')
-        access_token = auth_header.split(" ")[1]
-        if access_token:
+        access_token = Validations().get_access_token()
+        if not access_token:
+            return jsonify({"Message": "Token needed. Please login"})
+        else:
             users = self.db.get_users()
             return make_response(jsonify({
                 "Users": users,
                 "Message": "All Users"
             }), 200)
-        else:
-
-            abort(404)
 
 
 class LoginView(Resource):
@@ -59,31 +56,34 @@ class LoginView(Resource):
         return auth
 
 
-class UserView(Resource, ):
+class UserView(Resource):
     def __init__(self):
         self.db = UsersModel()
 
     def get(self, id):
-        auth_header = request.headers.get('Authorization')
-        access_token = auth_header.split(" ")[1]
-        if access_token:
+        access_token = Validations().get_access_token()
+        if not access_token:
+            return jsonify({"Message": "Token needed. Please login"})
+        else:
             res = self.db.get_single_user(id)
             return make_response(jsonify({
                 'Response': res
             }), 201)
 
     def delete(self, id):
-        auth_header = request.headers.get('Authorization')
-        access_token = auth_header.split(" ")[1]
-        if access_token:
+        access_token = Validations().get_access_token()
+        if not access_token:
+            return jsonify({"Message": "Token needed. Please login"})
+        else:
             self.db.delete_user(id)
             return {
                 "Message": "User Deleted"
             }
 
     def put(self, id):
-        auth_header = request.headers.get('Authorization')
-        access_token = auth_header.split(" ")[1]
+        access_token = Validations().get_access_token()
+        if not access_token:
+            return jsonify({"Message": "Token needed. Please login"})
         if access_token:
             data = request.get_json()
             resp = Validations().validate_user_inputs(data)
