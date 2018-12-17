@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.com/gatemadavid/iReporter2.svg?branch=develop)](https://travis-ci.com/gatemadavid/iReporter2)
-[![Coverage Status](https://coveralls.io/repos/github/gatemadavid/iReporter2/badge.svg?branch=develop)](https://coveralls.io/github/gatemadavid/iReporter2?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/096a1db123c0f124022e/maintainability)](https://codeclimate.com/github/gatemadavid/iReporter2/maintainability)
+[![codecov](https://codecov.io/gh/gatemadavid/iReporter2/branch/develop/graph/badge.svg)](https://codecov.io/gh/gatemadavid/iReporter2) [![Maintainability](https://api.codeclimate.com/v1/badges/096a1db123c0f124022e/maintainability)](https://codeclimate.com/github/gatemadavid/iReporter2/maintainability)
 **Project: iReporter**
 
 - iReporter is a platform that allows the public to speak out against corruption and poor development within the society. In case of corruption, users can create a red flag and include the location and description of the incident so that the relevant agencies can investigate. On the other hand, users can seek government intervention in areas such as poor infrastructure.
