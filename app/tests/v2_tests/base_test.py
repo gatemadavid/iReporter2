@@ -6,7 +6,7 @@ from ...api.db_config import create_tables, destroy_tables
 
 class BaseTest(TestCase):
     def setUp(self):
-        self.app = create_app().test_client
+        self.app = create_app('testing').test_client
 
         create_tables()
 
