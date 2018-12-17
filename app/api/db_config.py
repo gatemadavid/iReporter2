@@ -3,21 +3,20 @@ import psycopg2.extras
 import os
 
 url = os.getenv('DATABASE_TEST_URL')
-DATABASE_URL = os.getenv("DATABASE_URL", url)
 
 
 def connection(url):
-    conn = psycopg2.connect(DATABASE_URL)
+    conn = psycopg2.connect(url)
     return conn
 
 
 def init_db():
-    con = connection(DATABASE_URL)
+    con = connection(url)
     return con
 
 
 def create_tables():
-    conn = connection(DATABASE_URL)
+    conn = connection(url)
     curr = conn.cursor()
     queries = tables()
     for query in queries:
