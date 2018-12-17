@@ -72,8 +72,11 @@ class UserView(Resource):
 
     def delete(self, id):
         access_token = Validations().get_access_token()
+        user = self.db.check_user_id(id)
         if not access_token:
             return jsonify({"Message": "Token needed. Please login"})
+        elif not user:
+            return jsonify({"Message": "User ID does not exist"})
         else:
             self.db.delete_user(id)
             return {
@@ -82,8 +85,11 @@ class UserView(Resource):
 
     def put(self, id):
         access_token = Validations().get_access_token()
+        user = self.db.check_user_id(id)
         if not access_token:
             return jsonify({"Message": "Token needed. Please login"})
+        elif not user:
+            return jsonify({"Message": "User ID does not exist"})
         if access_token:
             data = request.get_json()
             resp = Validations().validate_user_inputs(data)

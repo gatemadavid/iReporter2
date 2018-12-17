@@ -38,6 +38,17 @@ class IncidentsModel():
             resp.append(res)
         return resp
 
+    def check_incident_id(self, id):
+        conn = self.db
+        curr = conn.cursor()
+        curr.execute(
+            """SELECT * FROM incidents WHERE id=%s; """, [id])
+        data = curr.fetchall()
+        if data:
+            return True
+        else:
+            return False
+
     def get_user_incidents(self, username):
         dbconn = self.db
         curr = dbconn.cursor()

@@ -7,7 +7,6 @@ import os
 
 
 secret_key = os.getenv('SECRET')
-url = os.getenv('DATABASE_URL')
 
 
 class UsersModel():
@@ -43,6 +42,17 @@ class UsersModel():
             )
             response.append(data)
         return response
+
+    def check_user_id(self, id):
+        conn = self.db
+        curr = conn.cursor()
+        curr.execute(
+            """SELECT * FROM users WHERE id=%s; """, [id])
+        data = curr.fetchall()
+        if data:
+            return True
+        else:
+            return False
 
     def register_users(self, username):
         dbconn = self.db
@@ -126,6 +136,4 @@ class UsersModel():
             is_admin = payload['admin']
             return username
         except jwt.ExpiredSignatureError:
-            return None
-        except jwt.InvalidTokenError:
             return None

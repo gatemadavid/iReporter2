@@ -60,8 +60,11 @@ class IncidentView(Resource):
 
     def delete(self, id):
         access_token = Validations().get_access_token()
+        incident = self.db.check_incident_id(id)
         if not access_token:
             return jsonify({"Message": "Token needed. Please login"})
+        elif not incident:
+            return jsonify({"Message": "Incident ID does not exist"})
         else:
             resp = self.db.delete_incident(id)
             return make_response(jsonify({

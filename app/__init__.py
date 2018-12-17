@@ -23,6 +23,6 @@ def create_app(config_name):
 
     @app.errorhandler(500)
     def internal_server_error(e):
-        return 'An error occurred. Make sure you have the permission to access this resource'
+        return 'An error occurred.'
 
     return app
