@@ -65,31 +65,45 @@ Create a python3 virtual environment using:
 
 **Post a red flag**
 
-- POST /api/vi/redflags
-  ![post](https://user-images.githubusercontent.com/27230922/49425507-e00b3080-f7ae-11e8-8cb1-be9755b7c143.png)
+- POST /api/v2/users
+  ![reg](https://user-images.githubusercontent.com/27230922/50077780-659ecf80-01f6-11e9-9420-99c12c7dc859.png)
+
+**Login user**
+
+- POST /api/v2/login
+  ![login](https://user-images.githubusercontent.com/27230922/50078045-fd042280-01f6-11e9-8aef-4ab48c96ad68.png)
+
+**Create Incident**
+
+- POST /api/v2/incidents
+  ![incident](https://user-images.githubusercontent.com/27230922/50078120-2e7cee00-01f7-11e9-915c-b5f74da784eb.png)
 
 The id field is added and incremented automattically
 
-**Fetch all Redflags**
+**Fetch all Incidents**
 
-- GET /api/v1/redflgas
-  ![get all](https://user-images.githubusercontent.com/27230922/49426053-65431500-f7b0-11e8-92c2-1ff211e8fc31.png)
+- GET /api/v2/incidents
+  ![all inc](https://user-images.githubusercontent.com/27230922/50078278-9cc1b080-01f7-11e9-972b-bb193864d522.png)
 
-**Fetch one Redflag**
+**Fetch one Incident**
 
-- GET /api/vi/redflags/<id>
-  ![get one](https://user-images.githubusercontent.com/27230922/49426088-83107a00-f7b0-11e8-95f1-63b8384de316.png)
+- GET /api/v2/incidents/<id>
+  ![one incident](https://user-images.githubusercontent.com/27230922/50078193-6421d700-01f7-11e9-8421-821ef12db27b.png)
 
-**Delete a Redflag**
+**Delete an Incident**
 
-- DELETE /api/v1/redflags/<id>
+- DELETE /api/v2/incidents/<id>
 
-![delete](https://user-images.githubusercontent.com/27230922/49426392-80625480-f7b1-11e8-81a6-a1ede1453818.png)
+![delete](https://user-images.githubusercontent.com/27230922/50078332-bbc04280-01f7-11e9-8a7c-b57e207775b9.png)
 
-**Update Red flag**
+**Update Incident**
 
-- PUT /api/vi/redflgas/<id>
-  ![put](https://user-images.githubusercontent.com/27230922/49426254-16e24600-f7b1-11e8-9a02-b209da3ce7ed.png)
+- PUT /api/v2/incidents/<id>
+  ![put]![update inc](https://user-images.githubusercontent.com/27230922/50078396-eca07780-01f7-11e9-8e30-e90202cde035.png)
+
+**Update User**
+PUT /api/v2/users<id>
+![edit user](https://user-images.githubusercontent.com/27230922/50078573-69cbec80-01f8-11e9-8b9e-5a44543b0da6.png)
 
 **Alternative API Consumption**
 The application is hosted on heroku and it can be accessed via postman on the following link:
